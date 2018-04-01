@@ -36,6 +36,9 @@ client.query('SELECT table_schema,table_name FROM information_schema.tables;', (
     .get('/onePattern/:id', controller.onePattern)
     .get('/updateForm/:id', controller.showUpdateForm)
     .post('/newPattern/:pattern_name/:author_name/:image_url/:instructions', controller.createNewPattern)
+     .post('/updatePattern/:pattern_id/:pattern_name/:author_name/:image_url/:instructions', controller.updateAPattern)
+
+
 /*For database connection test purposes only*/
     /*.get('/test/:id', testing123)
     .post('/newPattern/:pattern_name/:author_name/:image_url/:instructions', newPattern)

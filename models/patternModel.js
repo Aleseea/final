@@ -91,9 +91,31 @@ function createANewPattern(patternName, authorName, imageUrl, instructions, call
     });
 }
 
+function updatingOldPattern(patternId, patternName, authorName, imageUrl, instructions, callback){
+    console.log("These are the things that came through: " + patternId + ", " + patternName + ", " + authorName + ", " + imageUrl + ", " + instructions);
+    
+    /*"UPDATE pattern SET pattern_name = $2, author_name = $3, image_url = $4, instructions = $5 WHERE pattern_id = $1";*/
+    
+    pool.query('UPDATE pattern SET pattern_name = $2, author_name = $3, image_url = $4, instructions = $5 WHERE pattern_id = $1', [ patternId, patternName, authorName, imageUrl, instructions ], function(err, res){
+        
+        if (err){
+            throw err;
+        } else{
+            console.log('The Update into the database worked!');
+            
+            var results = {
+                status: 'success'
+            };
+            
+            callback(null, results);
+        }
+    });
+}
+
 module.exports = {
     getAllPatterns: getAllPatterns,
     getOnePattern: getOnePattern,
     displayUpdateForm: displayUpdateForm,
-    createANewPattern: createANewPattern
+    createANewPattern: createANewPattern,
+    updatingOldPattern: updatingOldPattern
 }

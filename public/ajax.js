@@ -120,15 +120,32 @@ function showUpdateStuff(req, res){
                     var submitButton = document.createElement('button');
                     
                     
-                    name.setAttribute('value', pattern.pattern_name);
+                    name.setAttribute('value', 'name of this pattern');
+                    name.setAttribute('id', 'pattern_name');
                     
                     image.setAttribute('value', pattern.image_url);
+                    image.setAttribute('id', 'img_url');
                     
                     author.setAttribute('value', pattern.author_name);
+                    author.setAttribute('id', 'author_name');
                     
                     instruction.setAttribute('value', pattern.instructions);
+                    instruction.setAttribute('id', 'instructions');
                     
-                    submitButton.setAttribute('onclick', 'updatePattern()');
+                    // Let's handle this at the form level instead:
+                    //submitButton.setAttribute('onclick', 'updatePattern(' + pattern.pattern_id + ')');
+  
+                    // Listen for submit events on the form element
+                    form.addEventListener('submit', function(e) {
+                      // The e parameter in this callback represents an Event object.
+                      // We can use it here to prevent the browser from following its default behavior:
+                      e.preventDefault();
+                      
+                      // Call the newPattern function as before:
+                      updatePattern(pattern.pattern_id);
+                    });
+                    
+                    
                     submitButton.textContent = "Update";
                     
                     outputDiv.appendChild(form);
@@ -165,7 +182,7 @@ function updatePattern(req, res){
     var image_url = document.getElementById("img_url").value;
     var author_name = document.getElementById("author_name").value;
     var instructions = document.getElementById("instructions").value;
-            console.log(" This is the things I was passed: " + pattern_name + ', ' + author_name + ', ' + image_url + ', ' + instructions);
+            console.log(" This are the things I was passed: " + pattern_name + ', ' + author_name + ', ' + image_url + ', ' + instructions);
     
     xmlhttp.onload = function(){
             console.log('done');
@@ -175,7 +192,7 @@ function updatePattern(req, res){
                 console.log('I am starting an update. See: ' + results);
                 var outputDiv = document.getElementById('results'); //.innerHTML = results;
                 
-                results.forEach(function(pattern){
+                /*results.forEach(function(pattern){
                     console.log(pattern.pattern_name, pattern.author_name, pattern.instructions, pattern.image_url);
                     
                     var display = document.createElement('p');
@@ -185,7 +202,7 @@ function updatePattern(req, res){
                     var change = document.createElement('button');
                     
                     
-                    change.setAttribute('onclick', "updatePattern(" + pattern.pattern_id + ")");
+                    change.setAttribute('onclick', "updatePattern(" + req + ")");
                     
                     display.textContent = pattern.instructions;
                     display.textContent = pattern.instructions;
@@ -197,7 +214,7 @@ function updatePattern(req, res){
                     outputDiv.appendChild(display);
                     outputDiv.appendChild(change);
                     
-                });
+                });*/
                 
             }else if (xmlhttp.status === 400) {
                 alert('There was an error 400!')
@@ -208,9 +225,14 @@ function updatePattern(req, res){
     };
     
     
-    xmlhttp.open('POST', '/newPattern/' + req + '/' pattern_name + '/' + author_name + '/' + image_url + '/' + instructions, true);
+    xmlhttp.open('POST', '/updatePattern/' + req + '/' + pattern_name + '/' + author_name + '/' + image_url + '/' + instructions, true);
     xmlhttp.send();
 }
+
+
+/*****************************************/
+/*********DONT TOUCH THIS STUFF!!!********/
+/*****************************************/
 
 
 function showNewPatternForm(req, res){
@@ -250,7 +272,19 @@ function showNewPatternForm(req, res){
                     instruction.setAttribute('placeholder', 'Detailed instructions');
                     instruction.setAttribute('type', 'text');
     
-                    button.setAttribute('onclick', 'newPattern(' +  + ')');
+    
+    // Let's handle this at the form level instead:
+                    //button.setAttribute('onclick', 'newPattern(' +  + ')');
+  
+                    // Listen for submit events on the form element
+                    form.addEventListener('submit', function(e) {
+                      // The e parameter in this callback represents an Event object.
+                      // We can use it here to prevent the browser from following its default behavior:
+                      e.preventDefault();
+                      
+                      // Call the newPattern function as before:
+                      newPattern();
+                    });
     
     
                     button.textContent = "Save Pattern";

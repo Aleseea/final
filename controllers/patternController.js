@@ -81,9 +81,34 @@ function createNewPattern(req, res){
     });
 }
 
+function updateAPattern(req, res){
+    console.log('Updating the pattern!!!');
+    /*var params = [req.params.pattern_id, req.params.pattern_name, req.params.author_name, req.params.image_url, req.params.instructions];*/
+    
+    var pattern_id = req.params.pattern_id;
+    var pattern_name = req.params.pattern_name;
+    var author_name = req.params.author_name;
+    var image_url = req.params.image_url;
+    var instructions  = req.params.instructions;
+    
+    console.log('I am updating a pattern with these attributes: ' + pattern_id + ', ' + pattern_name + ", " + author_name + ", " + image_url + ", " + instructions);
+    
+    patternModel.updatingOldPattern(pattern_id, pattern_name, author_name, image_url, instructions, function(err, results){
+        
+        console.log('I got back here with: ' + results);
+        
+        var checkResults = JSON.stringify(results);
+        
+        console.log('This is the stuff from second objects: ' + checkResults);
+        
+       res.json(results);
+    });
+}
+
 module.exports = {
     allPatterns: allPatterns,
     onePattern: onePattern,
     showUpdateForm: showUpdateForm,
-    createNewPattern: createNewPattern
+    createNewPattern: createNewPattern,
+    updateAPattern: updateAPattern
 }
