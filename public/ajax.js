@@ -120,7 +120,7 @@ function showUpdateStuff(req, res){
                     var submitButton = document.createElement('button');
                     
                     
-                    name.setAttribute('value', 'name of this pattern');
+                    name.setAttribute('value', pattern.pattern_name);
                     name.setAttribute('id', 'pattern_name');
                     
                     image.setAttribute('value', pattern.image_url);
