@@ -26,14 +26,16 @@ client.query('SELECT table_schema,table_name FROM information_schema.tables;', (
 });*/
 
 /*This works now*/
-/*var conString = "postgres://postgres:19Faye96@localhost:5432/postgres";*/
+/*var conString = "postgres://orange:orange@localhost:5432/postgres";*/
   
  app.set('port', (process.env.PORT || 5000))
     /*.use(express.json())
     .use(express.urlencoded({extended:true}))*/
     .use(express.static(__dirname + '/public'))
     .get('/allPatterns', controller.allPatterns)
-    /*.get('/onePattern/:id', controller.onePattern)*/
+    .get('/onePattern/:id', controller.onePattern)
+    .get('/updateForm/:id', controller.showUpdateForm)
+    .post('/newPattern/:pattern_name/:author_name/:image_url/:instructions', controller.createNewPattern)
 /*For database connection test purposes only*/
     /*.get('/test/:id', testing123)
     .post('/newPattern/:pattern_name/:author_name/:image_url/:instructions', newPattern)
