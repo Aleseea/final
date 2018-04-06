@@ -1,6 +1,11 @@
 function showAllPatterns(){
     console.log('Searching....');
     
+    var myNode = document.getElementById("results");
+    while (myNode.firstChild) {
+    myNode.removeChild(myNode.firstChild);
+    }
+    
     var xmlhttp = new XMLHttpRequest();
     
     xmlhttp.onload = function(){
@@ -47,6 +52,12 @@ function showAllPatterns(){
 function onePattern(req, res){
     console.log('Getting One Pattern....' + req);
     
+    /*Clear the info in the results DIV*/
+    var myNode = document.getElementById("results");
+    while (myNode.firstChild) {
+    myNode.removeChild(myNode.firstChild);
+    }
+    
     var xmlhttp = new XMLHttpRequest();
     
     xmlhttp.onload = function(){
@@ -60,7 +71,9 @@ function onePattern(req, res){
                 results.forEach(function(pattern){
                     console.log(pattern.pattern_name, pattern.author_name, pattern.instructions, pattern.image_url);
                     
-                    var display = document.createElement('p');
+                    var header = document.createElement('h2');
+                    var person = document.createElement('h3')
+                    var mainText = document.createElement('p');
                     var image = document.createElement('img')
                     image.setAttribute('src', "../image/" + pattern.image_url);
                     
@@ -68,15 +81,19 @@ function onePattern(req, res){
                     
                     
                     change.setAttribute('onclick', "showUpdateStuff(" + pattern.pattern_id + ")");
+                    image.setAttribute('alt', pattern.pattern_name);
                     
-                    display.textContent = pattern.instructions;
-                    display.textContent = pattern.instructions;
-                    display.textContent = pattern.instructions;
+                    header.textContent = pattern.pattern_name;
+                    mainText.textContent = pattern.instructions;
+                    person.textContent = pattern.author_name;
+                    
                     change.textContent = "Update Pattern";
                     
                     
                     outputDiv.appendChild(image);
-                    outputDiv.appendChild(display);
+                    outputDiv.appendChild(header);
+                    outputDiv.appendChild(person);
+                    outputDiv.appendChild(mainText);
                     outputDiv.appendChild(change);
                     
                 });
@@ -97,6 +114,11 @@ function onePattern(req, res){
 
 function showUpdateStuff(req, res){
     console.log('Show the update' + req);
+    
+    var myNode = document.getElementById("results");
+    while (myNode.firstChild) {
+    myNode.removeChild(myNode.firstChild);
+    }
     
     var xmlhttp = new XMLHttpRequest();
     
@@ -175,6 +197,7 @@ function showUpdateStuff(req, res){
 function updatePattern(req, res){
     console.log('Updating this ' + req + ' Pattern.');
     
+    
     var xmlhttp = new XMLHttpRequest();
     
     
@@ -183,6 +206,14 @@ function updatePattern(req, res){
     var author_name = document.getElementById("author_name").value;
     var instructions = document.getElementById("instructions").value;
             console.log(" This are the things I was passed: " + pattern_name + ', ' + author_name + ', ' + image_url + ', ' + instructions);
+    
+    
+    /*The clearing informaiton has to go after it recieves the info from the user*/
+    var myNode = document.getElementById("results");
+    while (myNode.firstChild) {
+    myNode.removeChild(myNode.firstChild);
+    }
+    
     
     xmlhttp.onload = function(){
             console.log('done');
@@ -238,9 +269,16 @@ function updatePattern(req, res){
 function showNewPatternForm(req, res){
     /*console.log('Show the update' + req);
     
+    
+    
     var xmlhttp = new XMLHttpRequest();
     
     xmlhttp.onload = function(){*/
+    
+    var myNode = document.getElementById("results");
+    while (myNode.firstChild) {
+    myNode.removeChild(myNode.firstChild);
+    }
             console.log('done');
             /*if (xmlhttp.status === 200){*/
                 /*console.log(xmlhttp.responseText)*/
@@ -316,6 +354,8 @@ function showNewPatternForm(req, res){
 function newPattern(req, res){
     console.log('Creating a new pattern....');
     
+    
+    
     var xmlhttp = new XMLHttpRequest();
     
     var pattern_name = document.getElementById("pattern_name").value;
@@ -323,6 +363,11 @@ function newPattern(req, res){
     var author_name = document.getElementById("author_name").value;
     var instructions = document.getElementById("instructions").value;
             console.log(" This is the things I was passed: " + pattern_name + ', ' + author_name + ', ' + image_url + ', ' + instructions);
+    
+    var myNode = document.getElementById("results");
+    while (myNode.firstChild) {
+    myNode.removeChild(myNode.firstChild);
+    }
     
     xmlhttp.onload = function(){
             console.log('done');
