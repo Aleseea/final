@@ -33,10 +33,13 @@ client.query('SELECT table_schema,table_name FROM information_schema.tables;', (
     .use(express.urlencoded({extended:true}))*/
     .use(express.static(__dirname + '/public'))
     .get('/allPatterns', controller.allPatterns)
+    .get('/allCategories', controller.allCategories)
+    .get('/oneCategory/:id', controller.oneCategory)
     .get('/onePattern/:id', controller.onePattern)
     .get('/updateForm/:id', controller.showUpdateForm)
     .post('/newPattern/:pattern_name/:author_name/:image_url/:instructions', controller.createNewPattern)
-     .post('/updatePattern/:pattern_id/:pattern_name/:author_name/:image_url/:instructions', controller.updateAPattern)
+    .post('/updatePattern/:pattern_id/:pattern_name/:author_name/:image_url/:instructions', controller.updateAPattern)
+    .post('/deletePattern/:pattern_id', controller.deleteAPattern)
 
 
 /*For database connection test purposes only*/
@@ -48,67 +51,6 @@ client.query('SELECT table_schema,table_name FROM information_schema.tables;', (
     .listen(app.get('port'), function(){
         console.log('Listening on port: ' + app.get('port'));
 });
-
-
-/*function newPattern(req, res){
-    console.log('Creating new pattern...');
-    var client = new pg.Client(conString);
-  client.connect(function(err) {
-    if (err) {
-      return console.error('ERROR: ', err);
-    }
-      var statement = "INSERT INTO pattern(pattern_name, author_name, image_url, instructions) VALUES($1, $2, $3, $4) ";
-      var params = [req.params.pattern_name, req.params.author_name, req.params.image_url, req.params.instructions];
-      
-      console.log(req);
-      console.log(params);
-      
-      var query = client.query(statement, params, function(err, result) {
-        console.log("Queried something");
-        client.end(function(err) {
-          if (err) {
-            return console.error('ERROR: ', err);
-          }
-        });
-
-        if (err) {
-          return console.error('ERROR: ', err);
-        }
-        console.log("Results: " + JSON.stringify(result.rows));
-        res.send(result.rows);
-      });
-    })
-}
-
-function updatePattern(req, res){
-    console.log("I'm going to try and update something...");
-    var client = new pg.Client(conString);
-    client.connect(function(err) {
-    if (err) {
-      return console.error('ERROR: ', err);
-    }
-      var statement = "UPDATE pattern SET pattern_name = $2, author_name = $3, image_url = $4, instructions = $5 WHERE pattern_id = $1";
-      var params = [req.params.pattern_id, req.params.pattern_name, req.params.author_name, req.params.image_url, req.params.instructions];
-      
-      console.log(req);
-      console.log(params);
-      
-      var query = client.query(statement, params, function(err, result) {
-        console.log("Queried something");
-        client.end(function(err) {
-          if (err) {
-            return console.error('ERROR: ', err);
-          }
-        });
-
-        if (err) {
-          return console.error('ERROR: ', err);
-        }
-        console.log("Results: " + JSON.stringify(result.rows));
-        res.send(result.rows);
-      });
-    })
-}*/
 
 
 

@@ -5,22 +5,28 @@
         <title>Best Hook Forward</title>
         <meta charset="utf-8">
         <script src="ajax.js"></script>
+        <link rel="stylesheet" href="hooked.css"/>
     </head>
     <body>
         <header>
             <h1>Best Hook Forward</h1>
-            <ul>
-                <li>
-                    <button id="displayAll" onclick="showAllPatterns()">All Patterns</button>
-                </li>
-                <li>
-                    <button id="newPatternForm" onclick="showNewPatternForm()">Add New Pattern</button>            
-                </li>
-            </ul>
-            
+            <nav>
+                <ul>
+                    <li>
+                        <button id="displayAll" onclick="showAllPatterns()">All Patterns</button>
+                    </li>
+                    <li>
+                        <button id="narrowResults" onclick="narrowResults()">Narrow Results</button>
+                    </li>
+                    <li>
+                        <button id="newPatternForm" onclick="showNewPatternForm()">Add New Pattern</button>            
+                    </li>
+                </ul>
+            </nav>
             
         </header>
         <main>
+            
             <!--This div is use to display the content that gets queried-->
             <div id="results"></div>
         </main>
