@@ -118,7 +118,7 @@ function displayUpdateForm(id, callback){
 function createANewPattern(patternName, authorName, imageUrl, instructions, callback){
     console.log("These are the things that came through: " + patternName + ", " + authorName + ", " + imageUrl + ", " + instructions);
     
-    pool.query('INSERT INTO pattern (pattern_name, author_name, image_url) VALUES ($1, $2, $3)', [ patternName, authorName, imageUrl ], function(err, res){
+    pool.query('INSERT INTO pattern (pattern_name, author_name, image_url, instructions) VALUES ($1, $2, $3, $4)', [ patternName, authorName, imageUrl, instructions ], function(err, res){
         
         if (err){
             throw err;
