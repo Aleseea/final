@@ -25,7 +25,6 @@ function showAllPatterns(){
                     
                     var listItem = document.createElement('li');
                     var img = document.createElement('img');
-                    var arrow = document.creat
                     
                     
                     link.setAttribute('onclick', "onePattern(" + pattern.pattern_id + ")");
@@ -120,6 +119,16 @@ function oneCategory(req, res){
     
     var xmlhttp = new XMLHttpRequest();
     
+    
+    var unorderedList = document.createElement('ul');
+
+                    
+                    
+                    
+                    
+    
+    
+    
     xmlhttp.onload = function(){
             console.log('done');
             if (xmlhttp.status === 200){
@@ -130,20 +139,28 @@ function oneCategory(req, res){
                 
                 var outPutDivChild = document.createElement('div');
                 
+                
                 outPutDivChild.setAttribute('id', 'resultsChild')
                 
                 results.forEach(function(pattern){
                     console.log(pattern.pattern_name);
                     
                     var link = document.createElement('button');
+                    var listItem = document.createElement('li');
+                    var img = document.createElement('img');
                     
                     
                     link.setAttribute('onclick', "onePattern(" + pattern.pattern_id + ")");
+                    unorderedList.setAttribute('id', "pickPattern");
+                    img.setAttribute('src', "./image/" + pattern.image_url);
+                    img.setAttribute('alt', pattern.pattern_name);
                     
                     link.textContent = pattern.pattern_name;
                     
-                    outputDiv.appendChild(outPutDivChild);
-                    outPutDivChild.appendChild(link);
+                    outputDiv.appendChild(outPutDivChild); outPutDivChild.appendChild(unorderedList);
+                    unorderedList.appendChild(listItem);
+                    listItem.appendChild(img);
+                    listItem.appendChild(link);
                 });
                 
                 /*---------------------------------------
