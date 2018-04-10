@@ -160,6 +160,21 @@ function deletingOldPattern(patternId, callback){
     
     /*"UPDATE pattern SET pattern_name = $2, author_name = $3, image_url = $4, instructions = $5 WHERE pattern_id = $1";*/
     
+    pool.query('DELETE FROM type WHERE pattern_id = ' + patternId + ';', function(err, res){
+        
+        if (err){
+            throw err;
+        } else{
+            console.log('The Delete from the database worked!');
+            
+            var results = {
+                status: 'success'
+            };
+            
+            /*callback(null, results);*/
+        }
+    });
+    
     pool.query('DELETE FROM pattern WHERE pattern_id = ' + patternId + ';', function(err, res){
         
         if (err){
@@ -175,6 +190,9 @@ function deletingOldPattern(patternId, callback){
         }
     });
 }
+/*
+DELETE FROM pattern p INNER JOIN type t ON p.pattern_id = t.pattern_id INNER JOIN category c ON t.category_id = c.category_id WHERE p.pattern_id = 14;
+*/
 
 module.exports = {
     getAllPatterns: getAllPatterns,
