@@ -14,28 +14,33 @@ function showAllPatterns(){
                 console.log(xmlhttp.responseText)
                 var results = JSON.parse(xmlhttp.responseText).list;
                 console.log('I am working....see: ' + results);
-                var outputDiv = document.getElementById('results'); //.innerHTML = results;
+                var outputDiv = document.getElementById('results');
+                
+                var unorderedList = document.createElement('ul');
                 
                 results.forEach(function(pattern){
-                    console.log(pattern.pattern_name);
+                    console.log(pattern.pattern_name, pattern.image_url);
                     
                     var link = document.createElement('button');
                     
+                    var listItem = document.createElement('li');
+                    var img = document.createElement('img');
+                    var arrow = document.creat
+                    
                     
                     link.setAttribute('onclick', "onePattern(" + pattern.pattern_id + ")");
+                    unorderedList.setAttribute('id', "pickPattern");
+                    img.setAttribute('src', "./image/" + pattern.image_url);
+                    img.setAttribute('alt', pattern.pattern_name);
                     
                     link.textContent = pattern.pattern_name;
                     
-                    outputDiv.appendChild(link);
+                    outputDiv.appendChild(unorderedList);
+                    unorderedList.appendChild(listItem);
+                    listItem.appendChild(img);
+                    listItem.appendChild(link);
                 });
                 
-                /*---------------------------------------
-                var createA = document.createElement('a');
-                var createAText = document.createTextNode(theCounter);
-                createA.setAttribute('href', "http://google.com");
-                createA.appendChild(createAText);
-                getTheTableTag.appendChild(createA)
-                ------------------------------------------*/
             }else if (xmlhttp.status === 400) {
                 alert('There was an error 400!');
             }
@@ -78,7 +83,7 @@ function narrowResults(){
                     link.setAttribute('name', 'category');*/
                     button.setAttribute('onclick', "oneCategory(" + category.category_id + ")");
                     
-                    button.textContent = category.category_name;
+                    button.textContent = category.category_name + ' \u2192';
                     
                     /*outputDiv.appendChild(label)
                     outputDiv.appendChild(link)*/
@@ -199,8 +204,8 @@ function onePattern(req, res){
                     image.setAttribute('alt', pattern.pattern_name);
                     
                     figcaption.textContent = pattern.pattern_name;
-                    mainText.textContent = pattern.instructions;
-                    person.textContent = pattern.author_name;
+                    mainText.textContent = "Instructions: " + pattern.instructions;
+                    person.textContent = "Author: " + pattern.author_name;
                     
                     change.textContent = "Update Pattern";
                     deleteStuff.textContent = "Delete Pattern";

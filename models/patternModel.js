@@ -8,7 +8,7 @@ const pool = new Pool({
 
 
 function getAllPatterns(callback){
-    pool.query('SELECT pattern_name, pattern_id FROM pattern', function(err, res){
+    pool.query('SELECT pattern_name, pattern_id, image_url FROM pattern', function(err, res){
         if (err){
             throw err;
         } else{
